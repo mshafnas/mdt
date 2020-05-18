@@ -1,6 +1,13 @@
 package com.ssd.mdt.mdt.repository;
 
+import com.ssd.mdt.mdt.model.Tour;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TourRepository extends JpaRepository {
+import java.util.List;
+
+@Repository
+public interface TourRepository extends JpaRepository<Tour, Long> {
+    List<Tour> findByTitle(String title);
 }
