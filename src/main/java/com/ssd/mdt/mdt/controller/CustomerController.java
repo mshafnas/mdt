@@ -25,6 +25,13 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
+    @GetMapping("list")
+    public String customers(Model model){
+        model.addAttribute("tours", this.customerRepository.findAll());
+        return "customerList";
+    }
+
+
     @GetMapping("/add-customer")
     public String showCustomerForm(Model model){
         Customer customer = new Customer();
@@ -34,15 +41,14 @@ public class CustomerController {
 
 
 
-
     @PostMapping("/add")
     public String addCustomer(@Valid Customer customer, BindingResult results, Model model){
         if (results.hasErrors()){
             return "addCustomer";
         }
-
+//        encrypt password
         String password = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt(12));
-
+//      store encrypted password
         customer.setPassword(password);
 
         this.customerRepository.save(customer);
