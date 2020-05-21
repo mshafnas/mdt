@@ -53,6 +53,9 @@ public class Tour {
     @NotBlank
     public String route;
 
+    @OneToMany(mappedBy = "tour")
+    private Set<TourBooking> tourBookings;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -68,7 +71,7 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(@NotBlank String title, @NotNull Date start_date, @NotNull Date end_date, @NotBlank String start_point, @NotBlank String end_point, @NotNull int rate, @NotBlank String route, Date createdAt, Date updatedAt) {
+    public Tour(@NotBlank String title, @NotNull Date start_date, @NotNull Date end_date, @NotBlank String start_point, @NotBlank String end_point, @NotNull int rate, @NotBlank String route, Set<TourBooking> tourBookings, Date createdAt, Date updatedAt) {
         this.title = title;
         this.start_date = start_date;
         this.end_date = end_date;
@@ -76,6 +79,7 @@ public class Tour {
         this.end_point = end_point;
         this.rate = rate;
         this.route = route;
+        this.tourBookings = tourBookings;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -142,6 +146,14 @@ public class Tour {
 
     public void setRoute(String route) {
         this.route = route;
+    }
+
+    public Set<TourBooking> getTourBookings() {
+        return tourBookings;
+    }
+
+    public void setTourBookings(Set<TourBooking> tourBookings) {
+        this.tourBookings = tourBookings;
     }
 
     public Date getCreatedAt() {

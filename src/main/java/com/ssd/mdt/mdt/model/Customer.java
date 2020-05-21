@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -43,6 +44,9 @@ public class Customer {
 
     public String password;
 
+    @OneToMany(mappedBy = "customer")
+    private Set<TourBooking> tourBookings;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -58,12 +62,13 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(@NotBlank String name, @NotBlank String address, @NotBlank String phone, @NotBlank String email, @NotBlank String password, Date createdAt, Date updatedAt) {
+    public Customer(@NotBlank String name, @NotBlank String address, @NotBlank String phone, @NotBlank String email, @NotBlank String password, Set<TourBooking> tourBookings, Date createdAt, Date updatedAt) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.tourBookings = tourBookings;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -116,6 +121,14 @@ public class Customer {
         this.password = password;
     }
 
+    public Set<TourBooking> getTourBookings() {
+        return tourBookings;
+    }
+
+    public void setTourBookings(Set<TourBooking> tourBookings) {
+        this.tourBookings = tourBookings;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -132,3 +145,4 @@ public class Customer {
         this.updatedAt = updatedAt;
     }
 }
+
