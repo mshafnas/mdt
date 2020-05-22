@@ -5,6 +5,7 @@ import com.ssd.mdt.mdt.model.Tour;
 import com.ssd.mdt.mdt.model.TourBooking;
 import com.ssd.mdt.mdt.repository.CustomerRepository;
 import com.ssd.mdt.mdt.repository.TourBookingRepository;
+import com.ssd.mdt.mdt.repository.TourRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("/booking")
 public class TourBookingController {
     @Autowired
+    private TourRepository tourRepository;
     private final TourBookingRepository tourBookingRepository;
     public TourBookingController(TourBookingRepository tourBookingRepository) {
         this.tourBookingRepository = tourBookingRepository;
@@ -30,9 +32,13 @@ public class TourBookingController {
     }
 
 
-    @GetMapping("/tourbook")
-    public String showTourBook(Model model){
+    @GetMapping("/tourbook/{id}")
+    public String showTourBook(@PathVariable ("id") long id, Model model){
         TourBooking tourBooking = new TourBooking();
+        Tour tour = tourRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Tour ID :" + id));
+
+        model.addAttribute("tour", tour);
         model.addAttribute("tourBooking", tourBooking);
         return "addTourBook";
     }
