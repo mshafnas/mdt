@@ -59,6 +59,11 @@
             <artifactId>spring-web</artifactId>
             <version>5.2.6.RELEASE</version>
         </dependency>
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.3m</version>
+		</dependency>
     </dependencies>
 
 	<build>

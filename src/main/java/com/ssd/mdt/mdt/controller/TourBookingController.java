@@ -6,7 +6,6 @@ import com.ssd.mdt.mdt.model.TourBooking;
 import com.ssd.mdt.mdt.repository.CustomerRepository;
 import com.ssd.mdt.mdt.repository.TourBookingRepository;
 import com.ssd.mdt.mdt.repository.TourRepository;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

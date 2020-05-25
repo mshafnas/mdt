@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,7 +24,7 @@ public class CustomerController {
 
     @GetMapping("list")
     public String customers(Model model){
-        model.addAttribute("tours", this.customerRepository.findAll());
+        model.addAttribute("customers", this.customerRepository.findAll());
         return "customerList";
     }
 
@@ -38,8 +35,6 @@ public class CustomerController {
         model.addAttribute("customer", customer);
         return "addCustomer";
     }
-
-
 
     @PostMapping("/add")
     public String addCustomer(@Valid Customer customer, BindingResult results, Model model){
