@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "cutomers")
+@Table(name = "customers")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public class Customer {
@@ -47,6 +47,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<TourBooking> tourBookings;
 
+    @OneToMany(mappedBy = "customer_id")
+    private Set<Feedback> feedbacks;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
@@ -62,13 +65,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(@NotBlank String name, @NotBlank String address, @NotBlank String phone, @NotBlank String email, @NotBlank String password, Set<TourBooking> tourBookings, Date createdAt, Date updatedAt) {
+    public Customer(@NotBlank String name, @NotBlank String address, @NotBlank String phone, @NotBlank String email, @NotBlank String password, Set<TourBooking> tourBookings, Set<Feedback> feedbacks, Date createdAt, Date updatedAt) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.password = password;
         this.tourBookings = tourBookings;
+        this.feedbacks = feedbacks;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -127,6 +131,14 @@ public class Customer {
 
     public void setTourBookings(Set<TourBooking> tourBookings) {
         this.tourBookings = tourBookings;
+    }
+
+    public Set<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(Set<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public Date getCreatedAt() {
