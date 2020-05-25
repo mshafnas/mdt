@@ -41,14 +41,14 @@
                 </thead>
                 <tbody>
                 <tr th:each="booking: ${tourBookings}">
-                    <td th:text="${booking.Id}"></td>
+                    <td th:text="${booking.id}"></td>
                     <td th:text="${booking.name}"></td>
                     <td th:text="${booking.tour}"></td>
                     <td th:text="${booking.customer}"></td>
                     <td th:text="${booking.createdAt}"></td>
                     <td th:text="${booking.updatedAt}"></td>
                     <td>
-                        <a href="" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/booking/edit/{id}(id=${booking.id})}" class="btn btn-primary">Edit</a>
                         <a href="" class="btn btn-success">Delete</a>
                     </td>
                 </tr>
