@@ -70,4 +70,6 @@ public class TourBookingController {
         model.addAttribute("tourBookings", this.tourBookingRepository.findAll());
         return "redirect:/booking/list";
     }
+
+
 }
