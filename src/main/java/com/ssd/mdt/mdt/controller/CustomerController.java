@@ -1,9 +1,7 @@
 package com.ssd.mdt.mdt.controller;
 
 import com.ssd.mdt.mdt.model.Customer;
-import com.ssd.mdt.mdt.model.Tour;
 import com.ssd.mdt.mdt.repository.CustomerRepository;
-import com.ssd.mdt.mdt.repository.TourRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,5 +47,24 @@ public class CustomerController {
         this.customerRepository.save(customer);
 
         return "redirect:list";
+    }
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable ("id") long id,Model model){
+        Customer customer = this.customerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Customer ID :" + id));
+
+        model.addAttribute("customer", customer);
+        return "updateCustomer";
+    }
+    @PostMapping("update/{id}")
+    public String updateCustomer(@PathVariable ("id") long id, @Valid Customer customer, BindingResult result, Model model){
+        if (result.hasErrors()){
+            customer.setCus_id(id);
+            return "updateCustomer";
+        }
+        customerRepository.save(customer);
+
+        model.addAttribute("customers", this.customerRepository.findAll());
+        return "redirect:/customer/list";
     }
 }

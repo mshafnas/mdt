@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <title>Edit Customer</title>
+
+    <!--    link css files-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!--    link js file-->
+    <script src="/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<br/>
+<div class="container text-center">
+    <h4>Edit Customer</h4>
+    <form action="#" th:action="@{/customer/update/{id}(id=${customer.cus_id})}" th:object="${customer}" method="POST" onsubmit="validateCustomer()">
+        <div class="row justify-content-center">
+            <div class="form-group col-md-4 col-sm-4">
+                <label for="name">Name</label>
+                <input type="text" th:field="*{name}" id="name" class="form-control" required>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4 col-sm-4">
+                <label for="address">Address</label>
+                <input type="text" th:field="*{address}" id="address" class="form-control" required>
+                <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-4 col-sm-4">
+                <label for="phone">Phone Number</label>
+                <input type="text" th:field="*{phone}" id="phone" class="form-control" required>
+                <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4 col-sm-4">
+                <label for="email">Email</label>
+                <input type="text" th:field="*{email}" id="email" class="form-control" required>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-8 col-sm-8">
+                <label for="password">Password</label>
+                <input type="password" th:field="*{password}" id="password" class="form-control" required>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="form-group col-md-8 col-sm-8">
+                <input type="submit" value="Submit" class="btn btn-primary btn-block">
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+</body>
+</html>
