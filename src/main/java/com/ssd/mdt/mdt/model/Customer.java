@@ -77,6 +77,7 @@ public class Customer {
         this.updatedAt = updatedAt;
     }
 
+
     public Long getCus_id() {
         return cus_id;
     }

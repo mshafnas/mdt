@@ -88,6 +88,7 @@ public class Tour {
         this.updatedAt = updatedAt;
     }
 
+
     public Long getId() {
         return Id;
     }

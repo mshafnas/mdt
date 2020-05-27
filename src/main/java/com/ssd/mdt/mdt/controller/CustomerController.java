@@ -18,27 +18,29 @@ import javax.validation.Valid;
 public class CustomerController {
     @Autowired
     private final CustomerRepository customerRepository;
+
     public CustomerController(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @GetMapping("list")
-    public String customers(Model model){
+    public String customers(Model model) {
+
         model.addAttribute("customers", this.customerRepository.findAll());
         return "customerList";
     }
 
 
     @GetMapping("/add-customer")
-    public String showCustomerForm(Model model){
+    public String showCustomerForm(Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "addCustomer";
     }
 
     @PostMapping("/add")
-    public String addCustomer(@Valid Customer customer, BindingResult results, Model model){
-        if (results.hasErrors()){
+    public String addCustomer(@Valid Customer customer, BindingResult results, Model model) {
+        if (results.hasErrors()) {
             return "addCustomer";
         }
 //        encrypt password
@@ -50,4 +52,17 @@ public class CustomerController {
 
         return "redirect:list";
     }
+
+    @GetMapping("delete/{id}")
+    public String deleteCustomer(@PathVariable ("id") long id,Model model){
+//        find the record
+        Customer customer = this.customerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Tour ID :" + id));
+
+//        delete the record
+        this.customerRepository.delete(customer);
+        model.addAttribute("customers", this.customerRepository.findAll());
+        return "redirect:/customer/list";
+    }
+
 }

@@ -65,4 +65,16 @@ public class TourController {
         return "redirect:/tour/list";
     }
 
+    @GetMapping("delete/{id}")
+    public String deleteTour(@PathVariable ("id") long id,Model model){
+//        find the record
+        Tour tour = this.tourRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Tour ID :" + id));
+
+//        delete the record
+        this.tourRepository.delete(tour);
+        model.addAttribute("tours", this.tourRepository.findAll());
+        return "redirect:/tour/list";
+    }
+
 }

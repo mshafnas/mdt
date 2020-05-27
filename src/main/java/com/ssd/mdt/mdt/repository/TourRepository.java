@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> {
-    List<Tour> findByTitle(String title);
+    Tour findByTitle(String title);
 }
