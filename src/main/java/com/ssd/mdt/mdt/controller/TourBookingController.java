@@ -42,8 +42,6 @@ public class TourBookingController {
         return "addTourBook";
     }
 
-
-
     @PostMapping("/add")
     public String addTour(@Valid TourBooking tourBooking, BindingResult results, Model model){
         if (results.hasErrors()){
