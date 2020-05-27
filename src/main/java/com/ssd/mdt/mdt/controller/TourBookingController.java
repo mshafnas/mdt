@@ -54,6 +54,26 @@ public class TourBookingController {
         return "redirect:list";
     }
 
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable ("id") long id,Model model){
+        TourBooking tourBooking = this.tourBookingRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Tour Booking ID :" + id));
+
+        model.addAttribute("tourBooking", tourBooking);
+        return "updateTourBook";
+    }
+    @PostMapping("update/{id}")
+    public String updateTourBook(@PathVariable ("id") long id, @Valid TourBooking tourBooking, BindingResult result, Model model){
+        if (result.hasErrors()){
+            tourBooking.setId(id);
+            return "updateTourBook";
+        }
+        tourBookingRepository.save(tourBooking);
+
+        model.addAttribute("tourBookings", this.tourBookingRepository.findAll());
+        return "redirect:/booking/list";
+    }
+
     @GetMapping("delete/{id}")
     public String deleteBooking(@PathVariable ("id") long id,Model model){
 //        find the record

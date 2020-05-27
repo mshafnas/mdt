@@ -6,31 +6,36 @@ import com.ssd.mdt.mdt.repository.CustomerRepository;
 import com.ssd.mdt.mdt.repository.TourRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class CustomerTest {
 
-//    @Autowired
-//    private CustomerRepository customerRepository;
-//
-//    @Test
-//    public void testSaveCustomer(){
-//        Customer customer = new Customer("Test Customer", "Test Address", "0771234567", "test@test.com", "test");
-//        customerRepository.save(customer);
-//
-//        Customer customerGet = customerRepository.findByName("Test Customer");
-//
-//        Assertions.assertNotNull(customer);
-//        Assertions.assertEquals(customerGet.getName(), customer.getName());
-//        Assertions.assertEquals(customerGet.getAddress(), customer.getAddress());
-//
-//
-//    }
+    @Autowired
+    private CustomerRepository customerRepository;
 
-//    @Test
-//    public void getAllTours(){
-//        Tour tour = new Tour("Test Trip", 2020-5-29, 2020-5-31, "Kandy", "Colomobo", 7500, "A9");
-//        tourRepository.save(tour);
-//        Assertions.assertNotNull(tourRepository.findAll());
-//    }
+    @Test
+    public void testSaveCustomer(){
+        Customer customer = new Customer();
+        customer.setName("Test Customer");
+        customer.setAddress("Test Address");
+        customer.setPhone("0777458961");
+        customer.setEmail("test@test.com");
+
+        String password = "abc123";
+//        encrypt password
+        String encpassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+//      store encrypted password
+        customer.setPassword(encpassword);
+        customerRepository.save(customer);
+
+        System.out.println("success");
+    }
 }
